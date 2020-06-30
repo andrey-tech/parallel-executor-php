@@ -1,0 +1,23 @@
+{
+    "name": "andrey-tech/parallel-executor-php",
+    "description": "Класс, выполняющий задачи в нескольких отдельных параллельных потоках PHP при помощи расширения parallel",
+    "keywords": [ "parallel", "threads" ],
+    "homepage": "https://github.com/andrey-tech/parallel-executor-php",
+    "minimum-stability": "stable",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "andrey-tech",
+            "homepage": "https://github.com/andrey-tech/",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": ">=7.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\": "src/App"
+        }
+    }
+}
