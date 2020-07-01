@@ -1,7 +1,7 @@
 {
     "name": "andrey-tech/parallel-executor-php",
     "description": "Класс, выполняющий задачи в нескольких отдельных параллельных потоках PHP при помощи расширения parallel",
-    "keywords": [ "parallel", "threads" ],
+    "keywords": [ "parallel", "threads", "php-threads", "php-parallel" ],
     "homepage": "https://github.com/andrey-tech/parallel-executor-php",
     "minimum-stability": "stable",
     "license": "MIT",
