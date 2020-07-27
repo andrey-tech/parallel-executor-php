@@ -2,16 +2,17 @@
 
 /**
  * Класс ParallelExecutor.
- * Выполняет задачи в нескольких отдельных параллельных потоках PHP при помощи расширения parallel.
+ * Выполняет задачи в нескольких отдельных параллельных потоках при помощи расширения parallel.
  *
  * @author    andrey-tech
  * @copyright 2020 andrey-tech
  * @license   MIT
  * @see https://github.com/andrey-tech/parallel-executor-php
  *
- * @version 1.0.0
+ * @version 1.0.1
  *
  * v1.0.0 (28.06.2020) Начальный релиз
+ * v1.0.1 (29.06.2020) Исправлен баг с именем переменной $channelCapacity
  *
  */
 
@@ -20,6 +21,7 @@ declare(strict_types = 1);
 namespace App;
 
 use parallel\{Runtime, Channel};
+use Closure;
 
 class ParallelExecutor
 {
@@ -27,43 +29,43 @@ class ParallelExecutor
      * Файл автозагрузчика классов, подключаемый в каждой среде исполнения
      * @var string
      */
-    public static $autoloader = '';
+    public static string $autoloader = '';
 
     /**
      * Объект класса именованного канала \parallel\Channel
      * @var object
      */
-    private $channel;
+    private \parallel\Channel $channel;
 
     /**
      * Массив объектов класса среды исполнения \parallel\Runtime
      * @var array
      */
-    private $workers = [];
+    private array $workers = [];
 
     /**
      * Конструктор
-     * @param int $threads Количество создаваемых сред исполнения, как отдельных потоков PHP
+     * @param int $threads Количество создаваемых сред исполнения, как отдельных потоков
      * @param string $channelName Имя создаваемого именованного канала
-     * @param int $channelСapacity Емкость именованного канала, МиБ (0 - небуферизированный канал)
+     * @param int $channelCapacity Емкость именованного канала, МиБ (0 - небуферизированный канал)
      */
     public function __construct(
         int $threads = 5,
         string $channelName = __CLASS__,
-        int $channelСapacity = Channel::Infinite
+        int $channelCapacity = Channel::Infinite
     ) {
         // Создаем именованный небуферизированный или буферизированный канал
-        if ($channelСapacity == 0) {
+        if ($channelCapacity == 0) {
             $this->channel = Channel::make($channelName);
         } else {
-            $this->channel = Channel::make($channelName, $channelСapacity);
+            $this->channel = Channel::make($channelName, $channelCapacity);
         }
 
-        // Создаем заданное число сред исполнения, как отдельных потоков PHP
+        // Создаем заданное число сред исполнения, как отдельных потоков
         for ($thread = 0; $thread < $threads; $thread++) {
             $this->workers[ $thread ] = new Runtime();
             $this->workers[ $thread ]->run(
-                \Closure::fromCallable([ $this, 'thread' ]),
+                Closure::fromCallable([ $this, 'thread' ]),
                 [ $channelName, self::$autoloader ]
             );
         }
@@ -71,11 +73,11 @@ class ParallelExecutor
 
     /**
      * Отправляет на исполнение переданную задачу
-     * @param  \Closure $closure Функция-замыкание, исполняющая задачу
+     * @param  Closure $closure Функция-замыкание, исполняющая задачу
      * @param  array    $argv    Аргументы функции
      * @return void
      */
-    public function execute(\Closure $closure, array $argv = []) :void
+    public function execute(Closure $closure, array $argv = []) :void
     {
         // Отправляем данные в именованный канал
         $this->channel->send([
@@ -85,7 +87,7 @@ class ParallelExecutor
     }
 
     /**
-     * Исполняет задачи в отдельном потоке PHP
+     * Исполняет задачи в отдельном потоке
      * @param  string $channelName Имя именованного канала
      * @param  string $autoloader Файл автозагрузчика классов, подключаемый в каждой среде исполнения
      * @return void
