@@ -1,6 +1,6 @@
 # Parallel Executor
 
-Простой класс на PHP 7.2+, позволяющий выполнять задачи в нескольких отдельных параллельных потоках PHP при помощи расширения [parallel](https://www.php.net/manual/ru/book.parallel.php).
+Простой класс на PHP 7.2+, позволяющий выполнять задачи в нескольких параллельных потоках исполнения при помощи PHP-расширения [parallel](https://www.php.net/manual/ru/book.parallel.php).
 
 ## Содержание
 <!-- MarkdownTOC levels="1,2,3,4,5,6" autoanchor="true" autolink="true" -->
