@@ -1,6 +1,6 @@
 {
     "name": "andrey-tech/parallel-executor-php",
-    "description": "Класс, выполняющий задачи в нескольких отдельных параллельных потоках PHP при помощи расширения parallel",
+    "description": "Простой класс на PHP 7.2+, позволяющий выполнять задачи в нескольких параллельных потоках исполнения при помощи PHP-расширения parallel",
     "keywords": [ "parallel", "threads", "php-threads", "php-parallel" ],
     "homepage": "https://github.com/andrey-tech/parallel-executor-php",
     "minimum-stability": "stable",
@@ -13,7 +13,8 @@
         }
     ],
     "require": {
-        "php": ">=7.0"
+        "php": ">=7.2",
+        "ext-parallel": "*"
     },
     "autoload": {
         "psr-4": {
