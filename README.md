@@ -2,6 +2,8 @@
 
 Простой класс на PHP 7.2+, позволяющий выполнять задачи в нескольких параллельных потоках исполнения при помощи PHP-расширения [parallel](https://www.php.net/manual/ru/book.parallel.php).
 
+Docker-образ для быстрой проверки результата работы примера находится в репозитории на [Docker Hub](https://hub.docker.com/r/andreytech/parallel-executor-php-example).  
+
 ## Содержание
 <!-- MarkdownTOC levels="1,2,3,4,5,6" autoanchor="true" autolink="true" -->
 
